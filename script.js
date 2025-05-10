@@ -1,10 +1,18 @@
 const emojis = ['🐶', '🐱', '🐭', '🐰', '🦊', '🐻', '🐼', '🦁'];
-let cards = [...emojis, ...emojis]; // Duplicar para pares
-cards.sort(() => 0.5 - Math.random()); // Embaralhar
+let cards = [...emojis, ...emojis];
+cards.sort(() => 0.5 - Math.random());
 
 const game = document.querySelector('.memory-game');
 let flippedCards = [];
 let lockBoard = false;
+let matchedPairs = 0;
+
+// Timer
+let seconds = 0;
+let timerInterval = setInterval(() => {
+  document.getElementById('timer').textContent = seconds;
+  seconds++;
+}, 1000);
 
 // Criar cartas
 cards.forEach(emoji => {
@@ -34,15 +42,22 @@ function flipCard(card) {
 
   if (flippedCards.length === 2) {
     lockBoard = true;
-
     const [first, second] = flippedCards;
+
     const match =
       first.querySelector('.back').textContent ===
       second.querySelector('.back').textContent;
 
     if (match) {
+      matchedPairs++;
       flippedCards = [];
       lockBoard = false;
+
+      if (matchedPairs === emojis.length) {
+        clearInterval(timerInterval);
+        alert(Parabéns! Você venceu em ${seconds - 1} segundos!);
+      }
+
     } else {
       setTimeout(() => {
         first.classList.remove('flip');
@@ -50,6 +65,6 @@ function flipCard(card) {
         flippedCards = [];
         lockBoard = false;
       }, 1000);
-    }
-  }
+    }
+  }
 }
