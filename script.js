@@ -1,21 +1,20 @@
 const emojis = ['🐶', '🐱', '🐭', '🐰', '🦊', '🐻', '🐼', '🦁'];
-let cards = [...emojis, ...emojis];
-cards.sort(() => 0.5 - Math.random());
+const cardsArray = [...emojis, ...emojis].sort(() => 0.5 - Math.random());
 
-const game = document.querySelector('.memory-game');
+const game = document.getElementById('memory-game');
 let flippedCards = [];
-let lockBoard = false;
 let matchedPairs = 0;
-
-// Timer
 let seconds = 0;
-let timerInterval = setInterval(() => {
-  document.getElementById('timer').textContent = seconds;
+
+// Iniciar cronômetro
+const timer = document.getElementById('timer');
+const interval = setInterval(() => {
   seconds++;
+  timer.textContent = seconds;
 }, 1000);
 
 // Criar cartas
-cards.forEach(emoji => {
+cardsArray.forEach(emoji => {
   const card = document.createElement('div');
   card.classList.add('card');
 
@@ -35,36 +34,32 @@ cards.forEach(emoji => {
 });
 
 function flipCard(card) {
-  if (lockBoard || card.classList.contains('flip')) return;
+  if (card.classList.contains('flip') || flippedCards.length === 2) return;
 
   card.classList.add('flip');
   flippedCards.push(card);
 
   if (flippedCards.length === 2) {
-    lockBoard = true;
     const [first, second] = flippedCards;
+    const emoji1 = first.querySelector('.back').textContent;
+    const emoji2 = second.querySelector('.back').textContent;
 
-    const match =
-      first.querySelector('.back').textContent ===
-      second.querySelector('.back').textContent;
-
-    if (match) {
+    if (emoji1 === emoji2) {
       matchedPairs++;
       flippedCards = [];
-      lockBoard = false;
 
       if (matchedPairs === emojis.length) {
-        clearInterval(timerInterval);
-        alert(Parabéns! Você venceu em ${seconds - 1} segundos!);
+        clearInterval(interval);
+        setTimeout(() => {
+          alert(Parabéns! Você venceu em ${seconds} segundos!);
+        }, 500);
       }
-
     } else {
       setTimeout(() => {
         first.classList.remove('flip');
         second.classList.remove('flip');
         flippedCards = [];
-        lockBoard = false;
       }, 1000);
-    }
-  }
+    }
+  }
 }

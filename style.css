@@ -1,55 +1,59 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f2f2f2;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  h1 {
-    margin-bottom: 20px;
-  }
-  
-  .memory-game {
-    width: 640px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 150px);
-    grid-gap: 10px;
-    perspective: 1000px;
-  }
-  
-  .card {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    cursor: pointer;
-  }
-  
-  .card.flip {
-    transform: rotateY(180deg);
-  }
-  
-  .card .face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-  }
-  
-  .front {
-    background-color: blue;
-    color: white;
-  }
-  
-  .back {
-    background-color: #4dff47;
-    transform: rotateY(180deg);
-  }
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+#timer {
+  font-weight: bold;
+}
+
+.memory-game {
+  width: 640px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 150px);
+  gap: 10px;
+  perspective: 1000px;
+}
+
+.card {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  backface-visibility: hidden;
+}
+
+.front {
+  background-color: #1e90ff;
+  color: white;
+}
+
+.back {
+  background-color: #ff6347;
+  transform: rotateY(180deg);
+}
